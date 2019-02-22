@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: postgres-sample
+    environment: [POSTGRES_USER=postgres, POSTGRES_PASSWORD=12345,
+      PGDATA=/var/lib/postgresql/data/pgdata, POSTGRES_DB=sample]
+    image: lightforever/postgres-sample:v0
+    network_mode: "host"
+    restart: always
+    volumes: ['./data/db:/var/lib/postgresql/data/pgdata']
+version: '3'
