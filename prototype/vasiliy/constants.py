@@ -76,6 +76,9 @@ if __name__ == '__main__':
     print(base_c.e)
     print('---')
 
+    cc.pi = 20
+    print(cc.pi, base_c.pi) # FIXME
+
     cc.e = 'new value'
     print(cc.e)
 
