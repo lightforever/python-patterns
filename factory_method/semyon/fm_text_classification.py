@@ -4,6 +4,7 @@ from nltk import WordPunctTokenizer
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 
+
 class Step(ABC):
 
     @abstractmethod
@@ -60,22 +61,46 @@ class BOWVectorizer(Step):
         return self.bow.transform(X)
 
 
-def step_factory(cls:Step) -> Step:
+class StepFactory:
 
-    return cls()
+    @abstractmethod
+    def create_step(self, *args):
+        pass
+
+
+class PreprocessingStepFactory(StepFactory):
+
+    def __init__(self):
+
+        self.preprocessors = {
+            'BOWVectorizer': BOWVectorizer,
+            'NLTKtokenizer': NLTKTokenizer,
+            'BasicTokenizer': BasicTokenizer,
+            'Normalizer': Normalizer
+        }
+
+    def create_step(self, type: str):
+
+        if type in self.preprocessors:
+            return self.preprocessors[type]()
+        else:
+            raise ValueError('invalid preprocessor type')
 
 
 def pipeline(X:str, steps:typing.List):
+    factory = PreprocessingStepFactory()
     res = X
     for step in steps:
-        step_instance = step_factory(step)
+        step_instance = factory.create_step(step)
         res = step_instance.eval(res)
     return res
 
+
 if __name__ == '__main__':
+
     steps = [
-        Normalizer,
-        BasicTokenizer
+        'Normalizer',
+        'BasicTokenizer'
     ]
 
     text = 'The Emperor protects!'
