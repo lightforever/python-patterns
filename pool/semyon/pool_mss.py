@@ -25,6 +25,7 @@ class CassesPool:
 
     def release_cass(self, cass: Cass):
         print(f'cass {cass.number} released')
+        cass.work_time = 5
         self.casses.append(cass)
 
     def __len__(self):
@@ -35,8 +36,8 @@ class CassesPool:
 if __name__ == '__main__':
     available_casses =  CassesPool(15)
     busy_casses = []
-    for i in range(100):
-        new_client = random.uniform(0, 1) > 0.8
+    for i in range(1000):
+        new_client = random.uniform(0, 1) > 0.5
         if new_client:
             if len(available_casses)<1:
                 print('no casses available. client waiting')
