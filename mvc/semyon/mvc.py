@@ -12,23 +12,22 @@ class DataModel:
         return [col for col in self.df if self.df[self.df[col].isna()].shape[0]/self.df.shape[0] > 0.4]
 
 
-class Controller:
-    def __init__(self, model: DataModel):
-        self.model = model
-
-    def get_bad_cols(self):
-        return self.model.bad_columns()
-
-
 class View:
 
-    def __init__(self, controller: Controller):
-        self.controller = controller
-
-    def list_bad_cols(self):
-        cols = self.controller.get_bad_cols()
+    def list_bad_cols(self, cols: typing.List[str]):
         for col in cols:
             print(f'Column \"{col}\" lacks too much data')
+
+
+class Controller:
+    def __init__(self, model: DataModel, view: View):
+        self.model = model
+        self.view = view
+
+    def get_bad_cols(self):
+        cols = self.model.bad_columns()
+        self.view.list_bad_cols(cols)
+
 
 
 if __name__ == '__main__':
