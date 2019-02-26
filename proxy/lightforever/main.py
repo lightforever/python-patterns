@@ -1,4 +1,15 @@
-class Witch:
+from abc import ABC, abstractmethod
+
+class BaseWitch(ABC):
+    @abstractmethod
+    def predict(self) -> str:
+        pass
+
+    @abstractmethod
+    def curse(self, enemy: str) -> str:
+        pass
+
+class Witch(BaseWitch):
     def __init__(self):
         self.asked_count = 1
         self.ask_message = 'Ask me a bit more'
@@ -15,7 +26,7 @@ class Witch:
             return f'Let {enemy} become a hare'
         return self.ask_message
 
-class WitchProxy(Witch):
+class WitchProxy(BaseWitch):
     def __init__(self, witch):
         self.witch = witch
 
@@ -32,7 +43,7 @@ class WitchProxy(Witch):
                 return answer
 
 class King:
-    def __init__(self, witch: Witch):
+    def __init__(self, witch: BaseWitch):
         self.witch = witch
 
     def ask_predict(self):
