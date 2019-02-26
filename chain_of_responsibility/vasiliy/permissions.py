@@ -11,11 +11,17 @@ class AbstractPermission(ABC):
         self.successor = successor
 
     def __call__(self, user: User):
-        if self.role in user.roles:
-            if self.successor is not None:
-                return self.successor(user)
-            return True
-        return False
+        res = self.check_permission(user)
+        if res is False:
+            return 'successfully failed'
+
+        if self.successor is not None:
+            return self.successor(user)
+
+        return True
+
+    def check_permission(self, user: User):
+        return self.role in user.roles
 
     @property
     @abstractmethod
