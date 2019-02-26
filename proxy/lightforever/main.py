@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class BaseWitch:
+class BaseWitch(ABC):
     @abstractmethod
     def predict(self) -> str:
         pass
