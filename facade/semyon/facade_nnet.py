@@ -48,6 +48,7 @@ class CrossEntropy(NetBlock):
     def backward(self):
         print('loss gradient computed')
 
+
 def create_layer(type: str) -> NetBlock:
     types = {
         'conv': ConvLayer,
@@ -109,7 +110,6 @@ class Facade:
 
     def make_prediction(self):
         self.net.infer()
-
 
 
 if __name__ == '__main__':
