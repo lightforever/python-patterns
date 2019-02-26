@@ -45,11 +45,10 @@ class Pipeline(Estimator):
         return self
 
     def predict(self, x):
-        predictions = None
         for stage, estimator in self.pipeline.items():
             print(f'predicting {stage} ...')
-            predictions = estimator.predict(x)
-        return predictions
+            x = estimator.predict(x)
+        return x
 
 
 if __name__ == '__main__':
