@@ -33,6 +33,7 @@ class Controller:
 if __name__ == '__main__':
 
     model = DataModel('data/house_prices/train.csv')
-    controller = Controller(model)
-    view = View(controller)
-    view.list_bad_cols()
+    view = View()
+    controller = Controller(model, view)
+
+    controller.get_bad_cols()
